@@ -4,6 +4,12 @@ export const assertEqual = (a, b) => {
     }
 };
 
+export const assertNotEqual = (a, b) => {
+    if (compare(a, b)) {
+        throw `${a} is equal to ${b}`;
+    }
+}
+
 export const post = async (url, params, body) => {
     try {
         const response = await axios({
@@ -12,9 +18,17 @@ export const post = async (url, params, body) => {
             params,
             data: body
         });
+
         return response;
     } catch (err) {
-        return err.response;
+        if (err.response) {
+
+            return err.response;
+        }
+        // console.log("fuck");
+        // console.log(err);
+
+        throw err.message; // Network error
     }
 };
 

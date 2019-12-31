@@ -1,10 +1,7 @@
-// import axios from './lib/axios.min.js';
-import {assertEqual, post, assertAttributeExists} from './utils.js';
+import {assertEqual, assertNotEqual, post, assertAttributeExists} from './utils.js';
 import { Tests } from './Tests.js';
 
 const URL = "https://bdi091mwm2.execute-api.us-west-1.amazonaws.com/prod/uploadAutograder";
-
-
 
 export class UploadAutograderTests extends Tests {
 
@@ -14,6 +11,7 @@ export class UploadAutograderTests extends Tests {
         this.tests = [
             this.noParamTest,
             this.successfulUploadTest,
+            this.emptyBody,
         ];
     }
 
@@ -26,9 +24,14 @@ export class UploadAutograderTests extends Tests {
 
     successfulUploadTest = async () => {
         const result = await post(URL, {name: "test"}, "asdg");
-
         assertEqual(result.status, 200);
         assertAttributeExists(result.data.data, "homeworkId");
+    }
+
+    emptyBody = async () => {
+        const result = await post(URL, {name: "test"}, "");
+        assertNotEqual(result.status, 200);
+        assertAttributeExists(result.data, "error");
     }
 
 }
