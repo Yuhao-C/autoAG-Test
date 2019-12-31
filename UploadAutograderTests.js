@@ -12,6 +12,8 @@ export class UploadAutograderTests extends Tests {
             this.noParamTest,
             this.successfulUploadTest,
             this.emptyBody,
+            this.nameEmptyString,
+            this.nameOnlySpaces,
         ];
     }
 
@@ -34,4 +36,15 @@ export class UploadAutograderTests extends Tests {
         assertAttributeExists(result.data, "error");
     }
 
+    nameEmptyString = async () => {
+        const result = await post(URL, {name: ""}, "");
+        assertNotEqual(result.status, 200);
+        assertAttributeExists(result.data, "error");
+    }
+
+    nameOnlySpaces = async () => {
+        const result = await post(URL, {name: "   "}, "");
+        assertNotEqual(result.status, 200);
+        assertAttributeExists(result.data, "error");
+    }
 }
