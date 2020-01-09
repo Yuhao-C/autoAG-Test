@@ -1,0 +1,39 @@
+{
+  "name": "autoAG-Test",
+  "version": "1.0.0",
+  "description": "## Start Developing",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yuhao-C/autoAG-Test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yuhao-C/autoAG-Test/issues"
+  },
+  "homepage": "https://github.com/Yuhao-C/autoAG-Test#readme",
+  "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/preset-env": "^7.7.7",
+    "babel-loader": "^8.0.6",
+    "html-loader": "^0.5.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "axios": "^0.19.1",
+    "core-js": "^3.6.2",
+    "html-webpack-inline-source-plugin": "0.0.10",
+    "html-webpack-plugin": "^3.2.0",
+    "regenerator-runtime": "^0.13.3"
+  }
+}
