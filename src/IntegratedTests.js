@@ -13,6 +13,9 @@ const uploadAGURL =
 const uploadSolutionURL =
   "https://bdi091mwm2.execute-api.us-west-1.amazonaws.com/prod/uploadSolution";
 
+const getSkeletonURL =
+  "https://bdi091mwm2.execute-api.us-west-1.amazonaws.com/prod/getSkeleton";
+
 export class IntegratedTests extends Tests {
   constructor() {
     super();
@@ -24,17 +27,24 @@ export class IntegratedTests extends Tests {
     const agResult = await post(
       uploadAGURL,
       { name: "test" },
-      `import homework\n`
+      {agCode: "import homework\n", hwCode: "print(\"Hello, world\")"}
     );
     assertEqual(agResult.status, 200);
     assertAttributeExists(agResult.data.data, "homeworkId");
     const id = agResult.data.data.homeworkId;
+    const skeletonResult = await post(
+      getSkeletonURL,
+      { homeworkId: id }
+    );
+    assertEqual(skeletonResult.status, 200);
+    assertAttributeExists(skeletonResult.data.data, "skeletonCode");
+    const skeletonCode = skeletonResult.data.data.skeletonCode;
     const solutionResult = await post(
       uploadSolutionURL,
       { homeworkId: id },
-      `print("Hello world!")`
+      skeletonCode
     );
     assertEqual(solutionResult.status, 200);
-    assertEqual(solutionResult.data.data.result, "Hello world!\n");
+    assertEqual(solutionResult.data.data.result, "Hello, world\n");
   };
 }

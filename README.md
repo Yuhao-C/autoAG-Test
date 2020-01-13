@@ -1,9 +1,15 @@
 # autoAG-Test
 
+## Install Dependencies
+
+`npm install`
+
 ## Start Developing
 
-`npm run build`
+`npm run dev`
 
-`cd dist`
+Webpage will be hosted at localhost:8000
 
-`python -m SimpleHTTPServer`
+## Deploy
+
+Pending on @yuhao-c

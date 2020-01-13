@@ -20,25 +20,24 @@ export class UploadAutograderTests extends Tests {
       { name: "Successful Upload", method: this.successfulUploadTest },
       { name: "Empty Body", method: this.emptyBodyTest },
       { name: "Name is Empty String", method: this.nameEmptyString },
-      { name: "Name Contains Only Spaces", method: this.nameOnlySpaces }
+      { name: "Name Contains Only Spaces ", method: this.nameOnlySpaces }
     ];
   }
 
   noParamTest = async () => {
-    const result = await post(URL, {}, "asdg");
-
-    assertEqual(result.status, 400);
+    const result = await post(URL, {});
+    assertNotEqual(result.status, 200);
     assertAttributeExists(result.data, "error");
   };
 
   successfulUploadTest = async () => {
-    const result = await post(URL, { name: "test" }, "asdg");
+    const result = await post(URL, { name: "test" }, { agCode: "import homework", hwCode: "print(\"Hello, world\")"});
     assertEqual(result.status, 200);
     assertAttributeExists(result.data.data, "homeworkId");
   };
 
   emptyBodyTest = async () => {
-    const result = await post(URL, { name: "test" }, "");
+    const result = await post(URL, { name: "test" }, {});
     assertNotEqual(result.status, 200);
     assertAttributeExists(result.data, "error");
   };
