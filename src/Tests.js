@@ -25,7 +25,7 @@ export class Tests {
     Promise.all(this.tests.map(f => this.getTestPromise(f.method))).then(
       values => {
         const passed = values.reduce((acc, value) => acc + value, 0);
-        console.log(`All tests finished. ${passed}/${total} passed.`);
+        console.log(`All tests finished for ${this.className}. ${passed}/${total} passed.`);
       }
     );
   }

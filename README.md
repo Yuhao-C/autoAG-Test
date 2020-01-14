@@ -1,4 +1,5 @@
 # autoAG-Test
+https://yuhao-c.github.io/autoAG-Test/
 
 ## Install Dependencies
 
@@ -11,6 +12,5 @@
 Webpage will be hosted at localhost:8000
 
 ## Deploy
-`npm run build`
 
 `npm run deploy`

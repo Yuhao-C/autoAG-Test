@@ -1,6 +1,7 @@
 import { UploadAutograderTests } from "./UploadAutograderTests.js";
 import { UploadSolutionTests } from "./UploadSolutionTests.js";
 import { IntegratedTests } from "./IntegratedTests.js";
+import { ListHomeworksTests } from "./ListHomeworksTests.js";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
@@ -12,84 +13,61 @@ window.console = {
     logDiv.appendChild(node);
   }
 };
+const testData = [
+  {
+    instance: new UploadAutograderTests(),
+  },
+  {
+    instance: new UploadSolutionTests(),
+  },
+  {
+    instance: new ListHomeworksTests(),
+  },
+  {
+    instance: new IntegratedTests(),
+  }
+];
 
-//////////////////////BEGIN UploadAutograderTests//////////////////////////
+const testsContainer = document.getElementById("testsContainer");
+// console.log("fucl", testsContainer);
+const runAllButton = document.createElement("button");
+runAllButton.innerHTML = "Run All";
+testsContainer.appendChild(runAllButton);
+testsContainer.appendChild(document.createElement("br"));
+runAllButton.addEventListener("click", () => testData.map((test) => {
+  test.instance.runTests();
+}));
+testsContainer.appendChild(document.createElement("br"));
 
-const uploadAutograderTests = new UploadAutograderTests();
-document
-  .getElementById("runUploadAutograderTests")
-  .addEventListener("click", () => uploadAutograderTests.runTests(), false);
-const uploadAutograderContainer = document.getElementById(
-  "uploadAutograderTestsButtons"
-);
-uploadAutograderTests.tests.map(test => {
-  const button = document.createElement("button");
-  button.innerHTML = test.name;
-  button.addEventListener(
-    "click",
-    () => {
-      console.log(`Testing uploadAutograderTests.${test.name}:`);
-      uploadAutograderTests.getTestPromise(test.method).then(result => {
-        result === 1 ? console.log("Passed.") : console.log("Failed.");
-      });
-    },
-    false
-  );
-  uploadAutograderContainer.appendChild(button);
+
+testData.map((test) => {
+  const instance = test.instance;
+  const runTestsButton = document.createElement("button");
+  runTestsButton.innerHTML = instance.className;
+  testsContainer.appendChild(runTestsButton);
+  runTestsButton.addEventListener("click", () => instance.runTests(), false);
+  testsContainer.appendChild(document.createElement("br"));
+
+  const subTestsContainer = document.createElement("div");
+  testsContainer.appendChild(subTestsContainer);
+  instance.tests.map(test => {
+    const button = document.createElement("button");
+    button.innerHTML = test.name;
+    button.addEventListener(
+      "click",
+      () => {
+        console.log(`Testing ${instance.className} - ${test.name}:`);
+        instance.getTestPromise(test.method).then(result => {
+          result === 1 ? console.log("Passed.") : console.log("Failed.");
+        });
+      },
+      false
+    );
+    subTestsContainer.appendChild(button);
+  });
+  testsContainer.appendChild(document.createElement("br"));
+
 });
-////////////////////////////////////////////////
-
-/////////////////////BEGIN uploadSolutionTests///////////////////////////
-
-const uploadSolutionTests = new UploadSolutionTests();
-document
-  .getElementById("runUploadSolutionTests")
-  .addEventListener("click", () => uploadSolutionTests.runTests(), false);
-const uploadSolutionContainer = document.getElementById(
-  "uploadSulotionTestsButtons"
-);
-uploadSolutionTests.tests.map(test => {
-  const button = document.createElement("button");
-  button.innerHTML = test.name;
-  button.addEventListener(
-    "click",
-    () => {
-      console.log(`Testing UploadSolutionTests.${test.name}:`);
-      uploadSolutionTests.getTestPromise(test.method).then(result => {
-        result === 1 ? console.log("Passed.") : console.log("Failed.");
-      });
-    },
-    false
-  );
-  uploadSolutionContainer.appendChild(button);
-});
-////////////////////////////////////////////////
-
-/////////////////////BEGIN integratedTests///////////////////////////
-
-const integratedTests = new IntegratedTests();
-document
-  .getElementById("runIntegratedTests")
-  .addEventListener("click", () => integratedTests.runTests(), false);
-
-const integratedContainer = document.getElementById("integratedTestsButtons");
-
-integratedTests.tests.map(test => {
-  const button = document.createElement("button");
-  button.innerHTML = test.name;
-  button.addEventListener(
-    "click",
-    () => {
-      console.log(`Testing IntegratedTests.${test.name}:`);
-      integratedTests.getTestPromise(test.method).then(result => {
-        result === 1 ? console.log("Passed.") : console.log("Failed.");
-      });
-    },
-    false
-  );
-  integratedContainer.appendChild(button);
-});
-////////////////////////////////////////////////
 
 document.getElementById("clear").addEventListener(
   "click",
