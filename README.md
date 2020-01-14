@@ -12,4 +12,4 @@ Webpage will be hosted at localhost:8000
 
 ## Deploy
 
-Pending on @yuhao-c
+`git subtree push --prefix dist origin gh-pages`
