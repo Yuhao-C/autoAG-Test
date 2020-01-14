@@ -12,4 +12,4 @@ Webpage will be hosted at localhost:8000
 
 ## Deploy
 
-Pending on @yuhao-c
+`npm run deploy`

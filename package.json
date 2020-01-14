@@ -13,7 +13,7 @@
     "build": "webpack",
     "watch": "npm-watch",
     "dev": "npm run watch & cd dist && python -m SimpleHTTPServer & cd .",
-    "deploy" : "git subtree push --prefix dist origin gh-pages"
+    "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
     "type": "git",
