@@ -16,6 +16,8 @@ const uploadSolutionURL =
 const getSkeletonURL =
   "https://bdi091mwm2.execute-api.us-west-1.amazonaws.com/prod/getSkeleton";
 
+const listHomeworksURL = "https://bdi091mwm2.execute-api.us-west-1.amazonaws.com/prod/listHomeworks";
+
 export class IntegratedTests extends Tests {
   constructor() {
     super();
@@ -46,5 +48,12 @@ export class IntegratedTests extends Tests {
     );
     assertEqual(solutionResult.status, 200);
     assertEqual(solutionResult.data.data.result, "Hello, world\n");
+    const listResult = await post(
+      listHomeworksURL,
+      { homeworkId: id, perPage: 1, currPage: 1 },
+    )
+    assertEqual(listResult.status, 200);
+    assertEqual(listResult.data.content.length, 1);
+    assertEqual(listResult.data.content[0].homeworkId, id);
   };
 }
